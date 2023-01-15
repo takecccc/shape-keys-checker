@@ -7,6 +7,16 @@ class ShapeKeysChecker(bpy.types.Operator):
     bl_description = "select shape key's moved vertices"
     bl_options = {"REGISTER", "UNDO"}
 
+    tolerance: bpy.props.FloatProperty(
+        name="tolerance",
+        description="maximum distance to consider motionless",
+        default=0,
+        min=0,
+        step=1,
+        precision=6,
+        unit="LENGTH" 
+    )
+
     def execute(self, context):
         if context.mode != "EDIT_MESH":
             print(context.mode)
@@ -32,7 +42,7 @@ class ShapeKeysChecker(bpy.types.Operator):
         base_key = active_key.relative_key
         
         # Baseと異なる頂点を取得
-        select_vertices = [(vt_active.co != vt_base.co) for vt_active, vt_base in zip(active_key.data, base_key.data)]
+        select_vertices = [(vt_active.co - vt_base.co).length > self.tolerance for vt_active, vt_base in zip(active_key.data, base_key.data)]
 
         me = obj.data
 
