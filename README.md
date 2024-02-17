@@ -1,7 +1,8 @@
 Shape Keyの、Basis(Relative To)に対して移動した頂点のみを選択するBlender Addon
 
 # 動作確認環境
-blender 3.2
+* blender 3.2
+* blender 4.0
 
 # 使い方
 addonsとしてインストールし、有効化。
